@@ -1,0 +1,21 @@
+---
+import { Image } from "astro:assets"
+import { Camera, Heart, Share2, Star, MapPin } from "@lucide/astro"
+import { twMerge } from "tailwind-merge"
+import clsx from "clsx"
+const { pics } = Astro.props
+const icons = [Camera, Heart, Share2, Star, MapPin]
+---
+<section class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+  {pics.map((p, idx) => {
+    const Icon = icons[idx % icons.length]
+    return (
+      <figure class={twMerge(clsx("group rounded-2xl border border-slate-200 p-3 shadow-sm", idx % 2 === 0 && "bg-slate-50"))}>
+        <Image src={p.mod} alt={p.name} widths={[400, 800, 1600]} sizes="(max-width: 800px) 100vw, 400px" class="rounded-xl transition group-hover:opacity-90" />
+        <figcaption class="mt-2 flex items-center gap-2 font-[Plus_Jakarta_Sans_Variable] text-sm text-slate-600">
+          <Icon class="size-4" /> {p.name}
+        </figcaption>
+      </figure>
+    )
+  })}
+</section>
